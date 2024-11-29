@@ -25,7 +25,13 @@ body {
 	}
 
 	.canvas {
+		position: relative;
 		background: green;
 		flex: 1;
+
+		.selection {
+			border: 1px dotted #000;
+			position: absolute;
+		}
 	}
 }
