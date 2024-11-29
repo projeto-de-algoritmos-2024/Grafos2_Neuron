@@ -1,8 +1,4 @@
-globalThis.div = document.createElement('div')
-
-window.addEventListener('load', () => {
-	window.div = /** @type {HTMLDivElement} */ (document.querySelector('.selection'))
-})
+globalThis.div = /** @type {HTMLDivElement} */ (document.querySelector('.selection'))
 
 let x1 = 0
 let y1 = 0
