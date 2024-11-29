@@ -19,15 +19,14 @@
 		<!-- Estilo do website. -->
 		<link rel="stylesheet" href="./stylesheet.css">
 
-		<!-- Funções -->
-		<script type="text/javascript" src="./main.js"></script>
-
 	</head>
 
 	<!-- A classe do corpo define o tema. -->
 	<body>
 		<div class="canvas">
-			<div hidden class="selection"></div>
+			<div class="node">
+				10
+			</div>
 		</div>
 		<div class="bar">
 			<div class="button pencil">
@@ -41,5 +40,8 @@
 			</div>
 		</div>
 	</body>
+
+	<script defer type="module" src="./selection.js"></script>
+	<script defer type="text/javascript" src="./main.js"></script>
 
 </html>

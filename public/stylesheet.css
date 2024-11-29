@@ -6,7 +6,7 @@ body {
 	margin: 0;
 	height: 100vh;
 
-	.bar {
+	>.bar {
 		background: blue;
 		flex: 0.08;
 		display: flex;
@@ -14,7 +14,7 @@ body {
 		align-items: center;
 		column-gap: 1rem;
 
-		.button {
+		>.button {
 			color: white;
 			font-weight: bold;
 			font-size: 1.25rem;
@@ -24,14 +24,22 @@ body {
 		}
 	}
 
-	.canvas {
+	>.canvas {
 		position: relative;
 		background: green;
 		flex: 1;
+		user-select: none;
 
-		.selection {
+		rectangular-selection {
 			border: 1px dotted #000;
 			position: absolute;
+		}
+
+		>.node {
+			position: absolute;
+			background: blue;
+			font-weight: bold;
+			aspect-ratio: 1 1;
 		}
 	}
 }
