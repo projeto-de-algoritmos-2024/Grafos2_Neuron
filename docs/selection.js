@@ -84,8 +84,15 @@ export class RectangularSelection extends HTMLElement {
 	 */
 	async create_node(radius, x, y)
 	{
+		const nodes_collection = /** @type {NodeListOf<Node>} */ (document.querySelectorAll('graph-node'))
+		const nodes = []
+		for (const node of nodes_collection)
+			nodes.push(node.vertice)
+
+		const len = nodes.length
+
 		function random() {
-			return Math.floor(Math.random() * graph.ids) + 1
+			return nodes[Math.floor(Math.random() * len)]
 		}
 
 		/**

@@ -11,10 +11,6 @@ globalThis.graph = {
 	 * @type {Map<Number, Node>}
 	 */
 	vertices: new Map(),
-	/**
-	 * @type {Map<Number, Array<>}
-	 */
-	//edges: new Map()
 }
 
 /**
@@ -26,6 +22,22 @@ function edge_smooth_size (x)
 	const max = Math.max(0, x - 55)
 	const exp = Math.exp(-0.1 * (x - 50))
 	return min + 5 / (1 + exp) + 0.5 * Math.log(1 + max)
+}
+
+/**
+ * @param {Number} a 
+ * @param {Number} b 
+ */
+export function find_edge (a, b)
+{
+	const min = Math.min(a, b)
+	const max = Math.max(a, b)
+
+	const edge = document.querySelector(`#edge-${min}-to-${max}`);
+	if (edge instanceof Edge)
+		return edge
+
+	return undefined
 }
 
 export class Edge extends HTMLElement {
@@ -194,8 +206,16 @@ export class Node extends HTMLElement {
 		graph.vertices.set(this.vertice, this)
 
 		this.addEventListener('click', () => {
-			prim(this)
-			//console.log(this.edges)
+			if (window.mode === 'prim')
+			{
+				window.mode = 'pencil';
+				prim(this);
+			}
+			else if (mode === 'eraser')
+			{
+				this.erase()
+			}
+
 		})
 
 		/**
@@ -211,6 +231,21 @@ export class Node extends HTMLElement {
 	 */
 	async connect(node) {
 		new Edge(this.canvas, this, node)
+	}
+
+	async erase() {
+		for (const [v, _] of this.edges)
+		{
+			const adj = /** @type {Node} */ (await find_node(v))
+			adj.edges.delete(this.vertice)
+
+			const edge = /** @type {Edge} */ (find_edge(this.vertice, v))
+			edge.remove()
+			edge.label.remove()
+		}
+
+		this.edges.clear()
+		this.remove()
 	}
 
 	async mousedown()

@@ -1,15 +1,13 @@
-import { Node, Edge, find_node } from "./graph.js";
+import { Node, Edge, find_node, find_edge } from "./graph.js";
 import { PriorityQueue } from './priority_queue.js'
 
 /**
  * @param {Number} to 
  * @param {Number} from 
  */
-export async function process_edge (from, to) {
-	const min = Math.min(from, to)
-	const max = Math.max(from, to)
-
-	const edge = /** @type {Edge} */ (document.querySelector(`#edge-${min}-to-${max}`))
+export async function process_edge (from, to)
+{
+	const edge = /** @type {Edge} */ (find_edge(from, to))
 	edge.style.background = 'pink'
 	console.log(from, to, edge)
 }
@@ -57,7 +55,9 @@ export async function prim (source) {
 	const C = new Set()
 	C.add(source.vertice)
 
-	while (C.size < graph.ids)
+	const quantity = document.querySelectorAll('graph-node').length
+
+	while (C.size < quantity)
 	{
 		let [w, v, f] = [-1, -1, -1]
 
@@ -67,7 +67,8 @@ export async function prim (source) {
 		} while (C.has(v));
 
 		if (w === -1)
-			alert("problema ocorreu")
+			return;
+			//alert("problema ocorreu")
 
 		minmax = Math.max(minmax, w)
 		C.add(v)
