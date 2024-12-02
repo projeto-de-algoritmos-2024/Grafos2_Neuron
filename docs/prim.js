@@ -2,6 +2,30 @@ import { Node, Edge, find_node, find_edge } from "./graph.js";
 import { PriorityQueue } from './priority_queue.js'
 
 /**
+ * @param {Number} source
+ */
+async function get_component (source)
+{
+	const pq = new PriorityQueue()
+	pq.push(source)
+
+	const component = new Set()
+
+	while (!pq.empty())
+	{
+		const top = pq.pop()
+		component.add(top)
+
+		const node = /** @type {Node} */ (await find_node(top))
+		for (const [id, _] of node.edges)
+			if (!component.has(id))
+				pq.push(id)
+	}
+
+	return component
+}
+
+/**
  * @param {Number} to 
  * @param {Number} from 
  */
@@ -47,7 +71,10 @@ export async function prim (source) {
 
 	let minmax = -1
 
-	console.log('heap', pq._heap)
+	/**
+	 * @type {Set<Number>}
+	 */
+	const component = await get_component(source.vertice)
 
 	/**
 	 * @type {Set<Number>}
@@ -55,9 +82,7 @@ export async function prim (source) {
 	const C = new Set()
 	C.add(source.vertice)
 
-	const quantity = document.querySelectorAll('graph-node').length
-
-	while (C.size < quantity)
+	while (C.size < component.size)
 	{
 		let [w, v, f] = [-1, -1, -1]
 
