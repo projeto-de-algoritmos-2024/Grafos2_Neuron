@@ -101,7 +101,6 @@ export class RectangularSelection extends HTMLElement {
 
 		for (const id of set)
 		{
-			console.log(id)
 			const to = /** @type {Node} */ (await find_node(id))
 			node.connect(to)
 		}

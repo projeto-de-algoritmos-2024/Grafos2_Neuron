@@ -1,3 +1,5 @@
+import { prim } from './prim.js'
+
 /**
  * Graph information.
  * @global
@@ -48,6 +50,9 @@ export class Edge extends HTMLElement {
 		this.label.textContent = `${this.size}`
 
 		canvas.append(this, this.label)
+
+		first.edges.set(second.vertice, this.size)
+		second.edges.set(first.vertice, this.size)
 
 		this.update()
 	}
@@ -178,13 +183,25 @@ export class Node extends HTMLElement {
 		this.style.top = `${y}px`
 
 
-		this.textContent = size.toString()
+		// this.textContent = `${size}`
+		this.textContent = `${this.vertice}`
 
 		this.addEventListener('mousedown', this.mousedown)
 
 		canvas.appendChild(this)
 
 		graph.vertices.set(this.vertice, this)
+
+		this.addEventListener('click', () => {
+			prim(this)
+			//console.log(this.edges)
+		})
+
+		/**
+		 * Edge to ID with WEIGHT.
+		 * @type {Map<Number, Number>}
+		 */
+		this.edges = new Map()
 	}
 
 	/**
@@ -204,14 +221,3 @@ export class Node extends HTMLElement {
 
 customElements.define("graph-node", Node);
 customElements.define("graph-edge", Edge);
-
-/**
- * @param {Node} start
- */
-function prim (start) {
-
-	/**
-	 * @type {Set<Number>}
-	 */
-	new Set()
-}
