@@ -16,5 +16,8 @@ canvas.addEventListener('mousemove', e => selection.mousemove(e))
 
 canvas.addEventListener('mouseup', stop_picking )
 
-canvas.append(new Node())
-canvas.append(new Node())
+const a = new Node(canvas, 10)
+const b = new Node(canvas, 5)
+const c = new Node(canvas, 15)
+a.connect(b)
+b.connect(c)
