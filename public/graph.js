@@ -4,7 +4,11 @@
  * */
 globalThis.graph = {
 	pick: 0,
-	ids: 0
+	ids: 0,
+	/**
+	 * @type {Map<Number, Node>}
+	 */
+	map: new Map()
 }
 
 export class Edge extends HTMLElement {
@@ -81,11 +85,36 @@ export class Edge extends HTMLElement {
 	}
 }
 
-export function stop_picking () {
-	const picken = document.querySelector(`#node-${graph.pick}`)
+/**
+ * @param {Number} id ID of the node.
+ * @returns {Node | undefined}
+ */
+export function find_node (id) {
+	const picken = document.querySelector(`#node-${id}`)
 	if (picken instanceof Node)
+		return picken;
+	return undefined;
+}
+
+export function stop_picking () {
+	const picken = find_node(graph.pick)
+	if (picken)
 		picken.style.zIndex = '2'
 	graph.pick = 0
+}
+
+/**
+ * @param {Node} node
+ * @param {MouseEvent} e 
+ */
+export function move_node(node, e) {
+	if (graph.pick !== node.vertice)
+		return;
+
+	const x = e.clientX - node.clientWidth / 2
+	const y = e.clientY - node.clientHeight / 2
+	node.style.left = `${x}px`
+	node.style.top = `${y}px`
 }
 
 export class Node extends HTMLElement {
@@ -110,10 +139,11 @@ export class Node extends HTMLElement {
 
 		this.textContent = size.toString()
 
-		this.addEventListener('mousemove', this.mousemove)
 		this.addEventListener('mousedown', this.mousedown)
 
 		canvas.appendChild(this)
+
+		graph.map.set(this.vertice, this)
 	}
 
 	/**
@@ -122,20 +152,6 @@ export class Node extends HTMLElement {
 	 */
 	connect(node) {
 		new Edge(this.canvas, this, node)
-	}
-
-	/**
-	 * @param {MouseEvent} e
-	 */
-	mousemove(e)
-	{
-		if (graph.pick !== this.vertice)
-			return;
-
-		const x = e.clientX - this.clientWidth / 2
-		const y = e.clientY - this.clientHeight / 2
-		this.style.left = `${x}px`
-		this.style.top = `${y}px`
 	}
 
 	mousedown()
