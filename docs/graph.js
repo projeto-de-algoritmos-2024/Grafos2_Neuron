@@ -8,7 +8,22 @@ globalThis.graph = {
 	/**
 	 * @type {Map<Number, Node>}
 	 */
-	map: new Map()
+	vertices: new Map(),
+	/**
+	 * @type {Map<Number, Array<>}
+	 */
+	//edges: new Map()
+}
+
+/**
+ * @param {Number} x 
+ */
+function edge_smooth_size (x)
+{
+	const min = 1
+	const max = Math.max(0, x - 55)
+	const exp = Math.exp(-0.1 * (x - 50))
+	return min + 5 / (1 + exp) + 0.5 * Math.log(1 + max)
 }
 
 export class Edge extends HTMLElement {
@@ -22,6 +37,9 @@ export class Edge extends HTMLElement {
 		this.first = first
 		this.second = second
 		this.size = first.size + second.size
+
+		const height = Math.round(edge_smooth_size(this.size))
+		this.style.height = `${height}px`
 
 		first.addEventListener('mousemove', () => this.update())
 		second.addEventListener('mousemove', () => this.update())
@@ -127,7 +145,7 @@ export async function move_node(node, e) {
 /**
  * @param {Number} x 
  */
-function smooth_size (x)
+function node_smooth_size (x)
 {
 	const min = 25
 	const max = Math.max(0, x - 100)
@@ -150,7 +168,7 @@ export class Node extends HTMLElement {
 		this.size = size
 		this.canvas = canvas
 
-		const radius = Math.round(smooth_size(size))
+		const radius = Math.round(node_smooth_size(size))
 		this.style.width = `${radius}px`
 		this.style.height = `${radius}px`
 		this.style.borderRadius = `${radius}px`
@@ -166,7 +184,7 @@ export class Node extends HTMLElement {
 
 		canvas.appendChild(this)
 
-		graph.map.set(this.vertice, this)
+		graph.vertices.set(this.vertice, this)
 	}
 
 	/**
@@ -186,3 +204,14 @@ export class Node extends HTMLElement {
 
 customElements.define("graph-node", Node);
 customElements.define("graph-edge", Edge);
+
+/**
+ * @param {Node} start
+ */
+function prim (start) {
+
+	/**
+	 * @type {Set<Number>}
+	 */
+	new Set()
+}

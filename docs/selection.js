@@ -93,7 +93,7 @@ export class RectangularSelection extends HTMLElement {
 		 */
 		const set = new Set()
 		if (graph.ids)
-			for (let i = 1; i <= 1; ++i)
+			for (let i = 1; i <= 3; ++i)
 				set.add(random())
 
 		const node = new Node(this.canvas, radius, x, y)

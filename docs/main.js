@@ -17,6 +17,6 @@ canvas.addEventListener('mousemove', async e => {
 	if (!graph.pick)
 		return
 
-	const node = /** @type {Node} */ (graph.map.get(graph.pick))
+	const node = /** @type {Node} */ (graph.vertices.get(graph.pick))
 	move_node(node, e)
 })
