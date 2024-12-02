@@ -35,11 +35,14 @@ body {
 			position: absolute;
 		}
 
-		>.node {
+		>graph-node {
 			position: absolute;
 			background: blue;
 			font-weight: bold;
 			aspect-ratio: 1 1;
+			cursor: pointer;
+			width: 5rem;
+			height: 5rem;
 		}
 	}
 }

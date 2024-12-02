@@ -41,7 +41,6 @@ export default class RectangularSelection extends HTMLElement {
 		if (!this.me(e))
 			return;
 
-
 		this.hidden = false
 		this.x1 = e.clientX
 		this.y1 = e.clientY
