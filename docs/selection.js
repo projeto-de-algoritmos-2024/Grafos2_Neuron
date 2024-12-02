@@ -15,15 +15,6 @@ export class RectangularSelection extends HTMLElement {
 		canvas.appendChild(this)
 	}
 
-	/**
-	 * @param {MouseEvent} e
-	 */
-	me(e) {
-		if (e.target !== e.currentTarget)
-			return false
-		return true
-	}
-
 	update()
 	{
 		let x3 = Math.min(this.x1, this.x2);
@@ -48,8 +39,8 @@ export class RectangularSelection extends HTMLElement {
 	 */
 	mousedown(e)
 	{
-		if (!this.me(e))
-			return;
+		if (e.target !== e.currentTarget)
+			return
 
 		this.hidden = false
 		this.x1 = e.clientX
@@ -62,8 +53,6 @@ export class RectangularSelection extends HTMLElement {
 	 */
 	mousemove(e)
 	{
-		//if (!this.me(e))
-		//	return;
 
 		this.x2 = e.clientX
 		this.y2 = e.clientY
