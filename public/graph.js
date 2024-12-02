@@ -31,6 +31,9 @@ export class Edge extends HTMLElement {
 	 * Update how the edge is renderized in the graph.
 	 */
 	update() {
+		/*
+		 * Calculate position
+		 */
 		const rect1 = this.first.getBoundingClientRect()
 		const x1 = rect1.x + rect1.width / 2
 		const y1 = rect1.y + rect1.height / 2
@@ -44,6 +47,12 @@ export class Edge extends HTMLElement {
 		const y = (y1 + y2) / 2 - rect.height / 2
 		this.style.left = `${x}px`
 		this.style.top = `${y}px`
+
+		/*
+		 * Calculate angle.
+		 */
+		const angle = Math.atan2(y2 - y1, x2 - x1)
+		this.style.transform = `rotate(${angle}rad)`
 	}
 }
 

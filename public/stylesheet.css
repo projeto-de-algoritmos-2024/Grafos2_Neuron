@@ -53,8 +53,8 @@ body {
 		>graph-edge {
 			position: absolute;
 			background: red;
-			width: 3rem;
-			height: 3rem;
+			width: 6rem;
+			height: 2rem;
 			z-index: 1;
 		}
 	}
