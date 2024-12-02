@@ -34,7 +34,7 @@ export class Edge extends HTMLElement {
 	/**
 	 * Update how the edge is renderized in the graph.
 	 */
-	update() {
+	async update() {
 		/*
 		 * Calculate position
 		 */
@@ -87,17 +87,17 @@ export class Edge extends HTMLElement {
 
 /**
  * @param {Number} id ID of the node.
- * @returns {Node | undefined}
+ * @returns {Promise<Node | undefined>}
  */
-export function find_node (id) {
+export async function find_node (id) {
 	const picken = document.querySelector(`#node-${id}`)
 	if (picken instanceof Node)
 		return picken;
 	return undefined;
 }
 
-export function stop_picking () {
-	const picken = find_node(graph.pick)
+export async function stop_picking () {
+	const picken = await find_node(graph.pick)
 	if (picken)
 		picken.style.zIndex = '2'
 	graph.pick = 0
@@ -107,7 +107,7 @@ export function stop_picking () {
  * @param {Node} node
  * @param {MouseEvent} e 
  */
-export function move_node(node, e) {
+export async function move_node(node, e) {
 	if (graph.pick !== node.vertice)
 		return;
 
@@ -150,11 +150,11 @@ export class Node extends HTMLElement {
 	 * Connect this node with another
 	 * @param {Node} node 
 	 */
-	connect(node) {
+	async connect(node) {
 		new Edge(this.canvas, this, node)
 	}
 
-	mousedown()
+	async mousedown()
 	{
 		graph.pick = this.vertice
 		this.style.zIndex = '3'
