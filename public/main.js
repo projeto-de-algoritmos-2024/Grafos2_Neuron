@@ -18,6 +18,6 @@ canvas.addEventListener('mouseup', stop_picking )
 
 const a = new Node(canvas, 10)
 const b = new Node(canvas, 5)
-//const c = new Node(canvas, 15)
+const c = new Node(canvas, 15)
 a.connect(b)
-//b.connect(c)
+b.connect(c)
