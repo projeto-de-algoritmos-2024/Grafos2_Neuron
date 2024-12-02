@@ -33,6 +33,7 @@ body {
 		rectangular-selection {
 			border: 1px dotted #000;
 			position: absolute;
+			background-color: yellow;
 		}
 
 		>graph-node {
@@ -54,6 +55,12 @@ body {
 			height: 5px;
 			z-index: 1;
 			transform-origin: 0 50%;
+		}
+
+		>span {
+			position: absolute;
+			transform-origin: 0 50%;
+			background-color: green;
 		}
 	}
 }

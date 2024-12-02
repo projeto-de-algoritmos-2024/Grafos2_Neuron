@@ -26,7 +26,10 @@ export class Edge extends HTMLElement {
 		first.addEventListener('mousemove', () => this.update())
 		second.addEventListener('mousemove', () => this.update())
 
-		canvas.appendChild(this)
+		this.label = document.createElement('span')
+		this.label.textContent = `${this.size}`
+
+		canvas.append(this, this.label)
 
 		this.update()
 	}
@@ -51,6 +54,7 @@ export class Edge extends HTMLElement {
 		 */
 		const angle = Math.atan2(center_y2 - center_y1, center_x2 - center_x1);
 		this.style.transform = `rotate(${angle}rad)`
+		this.label.style.transform = `rotate(${0}rad)`
 
 		const radius1 = rect1.width / 2;
 		const radius2 = rect2.width / 2;
@@ -75,6 +79,9 @@ export class Edge extends HTMLElement {
 		const rect = this.getBoundingClientRect()
 		this.style.left = `${x1}px`
 		this.style.top = `${y1}px`
+
+		this.label.style.left = `${(x1 + x2) / 2}px`
+		this.label.style.top = `${(y1 + y2) / 2}px`
 
 
 		/*
