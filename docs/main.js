@@ -1,13 +1,9 @@
-/**
- * @typedef {import('./selection.js').default} RectangularSelection
- */
-
+import { RectangularSelection } from './selection.js';
 import { Node, move_node, stop_picking } from './graph.js'
 
 const canvas = /** @type {HTMLDivElement} */ (document.querySelector('.canvas'));
-const selection = /** @type {RectangularSelection} */ (document.createElement('rectangular-selection'));
+const selection = new RectangularSelection(canvas)
 
-canvas.append(selection)
 selection.hidden = true
 
 canvas.addEventListener('mouseup', async () => selection.mouseup())
@@ -24,9 +20,9 @@ canvas.addEventListener('mousemove', async e => {
 	move_node(node, e)
 })
 
-const a = new Node(canvas, 10)
-const b = new Node(canvas, 5)
-const c = new Node(canvas, 15)
+const a = new Node(canvas, 10, 400, 400)
+const b = new Node(canvas, 5, 500, 100)
+const c = new Node(canvas, 15, 250, 500)
 a.connect(b)
 b.connect(c)
 a.connect(c)

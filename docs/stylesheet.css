@@ -60,7 +60,7 @@ body {
 		>span {
 			position: absolute;
 			transform-origin: 0 50%;
-			background-color: green;
+			background-color: white;
 		}
 	}
 }

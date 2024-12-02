@@ -129,19 +129,22 @@ export class Node extends HTMLElement {
 	/**
 	 * @param {HTMLElement} canvas Where the node will be renderized.
 	 * @param {Number} size Size of node in the graph.
+	 * @param {Number} x
+	 * @param {Number} y
 	 */
-	constructor(canvas, size) {
+	constructor(canvas, size, x = 0, y = 0) {
 		super()
 		this.vertice = ++graph.ids
 		this.id = `node-${this.vertice}`
 		this.size = size
 		this.canvas = canvas
 
-		const dimension = size * 0.25
-		this.style.width = `${dimension}rem`
-		this.style.height = `${dimension}rem`
-		this.style.borderRadius = `${dimension}rem`
-		this.style.fontSize = `${dimension / 2}rem`
+		this.style.width = `${size}px`
+		this.style.height = `${size}px`
+		this.style.borderRadius = `${size}px`
+		this.style.fontSize = `${size / 2}px`
+		this.style.left = `${x}px`
+		this.style.top = `${y}px`
 
 
 		this.textContent = size.toString()

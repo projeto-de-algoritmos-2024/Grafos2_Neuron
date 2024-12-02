@@ -1,15 +1,18 @@
-export default class RectangularSelection extends HTMLElement {
-	x1 = 0
-	y1 = 0
-	x2 = 0
-	y2 = 0
+import { Node } from './graph.js'
 
-	constructor() {
+export class RectangularSelection extends HTMLElement {
+	/**
+	 * @param {HTMLElement} canvas
+	 */
+	constructor(canvas) {
 		super()
 		this.x1 = 0
 		this.y1 = 0
 		this.x2 = 0
 		this.y2 = 0
+		this.canvas = canvas
+
+		canvas.appendChild(this)
 	}
 
 	/**
@@ -23,14 +26,21 @@ export default class RectangularSelection extends HTMLElement {
 
 	update()
 	{
-		const x3 = Math.min(this.x1, this.x2)
-		const x4 = Math.max(this.x1, this.x2)
-		const y3 = Math.min(this.y1, this.y2)
-		const y4 = Math.max(this.y1, this.y2)
+		let x3 = Math.min(this.x1, this.x2);
+		let y3 = Math.min(this.y1, this.y2);
+
+		const size = Math.min(Math.abs(this.x2 - this.x1), Math.abs(this.y2 - this.y1));
+
+		// Adjust position to maintain square alignment based on initial direction
+		if (this.x2 < this.x1)
+			x3 = this.x1 - size; // Dragging left
+		if (this.y2 < this.y1)
+			y3 = this.y1 - size; // Dragging up
+
 		this.style.left = `${x3}px`
 		this.style.top = `${y3}px`
-		this.style.width = `${x4 - x3}px`
-		this.style.height = `${y4 - y3}px`
+		this.style.width = `${size}px`
+		this.style.height = `${size}px`
 	}
 
 	/**
@@ -52,8 +62,8 @@ export default class RectangularSelection extends HTMLElement {
 	 */
 	mousemove(e)
 	{
-		if (!this.me(e))
-			return;
+		//if (!this.me(e))
+		//	return;
 
 		this.x2 = e.clientX
 		this.y2 = e.clientY
@@ -62,6 +72,11 @@ export default class RectangularSelection extends HTMLElement {
 
 	mouseup()
 	{
+		const rect = this.getBoundingClientRect()
+		const radius = Math.min(rect.width, rect.height)
+		const [x, y] = [rect.x, rect.y]
+		this.canvas.appendChild(new Node(this.canvas, radius, x, y))
+
 		this.hidden = true
 	}
 }
