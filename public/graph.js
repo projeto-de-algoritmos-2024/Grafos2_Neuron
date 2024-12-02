@@ -37,40 +37,54 @@ export class Edge extends HTMLElement {
 		const rect1 = this.first.getBoundingClientRect()
 		const rect2 = this.second.getBoundingClientRect()
 
-		const x1 = rect1.x + rect1.width / 2
-		const y1 = rect1.y + rect1.height / 2
-		const x2 = rect2.x + rect2.width / 2
-		const y2 = rect2.y + rect2.height / 2
+		const center_x1 = rect1.x + rect1.width / 2
+		const center_y1 = rect1.y + rect1.height / 2
+		const center_x2 = rect2.x + rect2.width / 2
+		const center_y2 = rect2.y + rect2.height / 2
 
 		/*
 		 * Calculate angle.
 		 */
-		const angle = Math.atan2(y2 - y1, x2 - x1);
+		const angle = Math.atan2(center_y2 - center_y1, center_x2 - center_x1);
 		this.style.transform = `rotate(${angle}rad)`
 
-		// Calculate the points on the perimeter of each circle
 		const radius1 = rect1.width / 2;
-		//const radius2 = rect2.width / 2;
+		const radius2 = rect2.width / 2;
 
-		const perimeter_x1 = x1 + radius1 * Math.cos(angle);
-		const perimeter_y1 = y1 + radius1 * Math.sin(angle);
-		//const perimeter_x2 = x2 - radius2 * Math.cos(angle);
-		//const perimeter_y2 = y2 - radius2 * Math.sin(angle);
+		const dx = center_x2 - center_x1;
+		const dy = center_y2 - center_y1;
+		const distance = Math.sqrt(dx * dx + dy * dy);
+
+		if (distance <= radius1 + radius2) {
+			this.style.display = 'none';
+			return;
+		}
+
+		this.style.display = 'block';
+
+
+		const x1 = center_x1 + radius1 * Math.cos(angle);
+		const y1 = center_y1 + radius1 * Math.sin(angle);
+		const x2 = center_x2 - radius2 * Math.cos(angle);
+		const y2 = center_y2 - radius2 * Math.sin(angle);
 
 		const rect = this.getBoundingClientRect()
-		this.style.left = `${perimeter_x1}px`
-		this.style.top = `${perimeter_y1}px`
+		this.style.left = `${x1}px`
+		this.style.top = `${y1}px`
 
 
 		/*
 		 * Calculate width
 		 */
 		const width = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-		this.style.width = `${width - rect2.width}px`
+		this.style.width = `${width}px`
 	}
 }
 
 export function stop_picking () {
+	const picken = document.querySelector(`#node-${graph.pick}`)
+	if (picken instanceof Node)
+		picken.style.zIndex = '2'
 	graph.pick = 0
 }
 
@@ -83,8 +97,16 @@ export class Node extends HTMLElement {
 	constructor(canvas, size) {
 		super()
 		this.vertice = ++graph.ids
+		this.id = `node-${this.vertice}`
 		this.size = size
 		this.canvas = canvas
+
+		const dimension = size * 0.25
+		this.style.width = `${dimension}rem`
+		this.style.height = `${dimension}rem`
+		this.style.borderRadius = `${dimension}rem`
+		this.style.fontSize = `${dimension / 2}rem`
+
 
 		this.textContent = size.toString()
 
@@ -119,6 +141,7 @@ export class Node extends HTMLElement {
 	mousedown()
 	{
 		graph.pick = this.vertice
+		this.style.zIndex = '3'
 	}
 }
 

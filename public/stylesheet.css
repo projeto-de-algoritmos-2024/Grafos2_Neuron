@@ -38,7 +38,6 @@ body {
 		>graph-node {
 			position: absolute;
 			background: rgb(0, 0, 255, 0.25);
-			font-size: 2rem;
 			font-weight: bold;
 			aspect-ratio: 1 1;
 			cursor: pointer;
@@ -46,8 +45,6 @@ body {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			width: 5rem;
-			height: 5rem;
 			border-radius: 5rem;
 		}
 
