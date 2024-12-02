@@ -68,11 +68,12 @@ export class RectangularSelection extends HTMLElement {
 	 */
 	mouseup(e)
 	{
-		if (e.target !== e.currentTarget)
+		if (this.hidden)
 			return
 
 		const rect = this.getBoundingClientRect()
-		this.create_node(Math.min(rect.width, rect.height), rect.x, rect.y)
+		const radius = Math.min(rect.width, rect.height) - 1
+		this.create_node(radius, rect.x, rect.y)
 		this.hidden = true
 	}
 

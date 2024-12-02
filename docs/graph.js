@@ -124,6 +124,17 @@ export async function move_node(node, e) {
 	node.style.top = `${y}px`
 }
 
+/**
+ * @param {Number} x 
+ */
+function smooth_size (x)
+{
+	const min = 25
+	const max = Math.max(0, x - 100)
+	const exp = Math.exp(-0.05 * (x - 70))
+	return min + 100 / (1 + exp) + 0.5 * Math.log(1 + max)
+}
+
 export class Node extends HTMLElement {
 
 	/**
@@ -139,10 +150,12 @@ export class Node extends HTMLElement {
 		this.size = size
 		this.canvas = canvas
 
-		this.style.width = `${size}px`
-		this.style.height = `${size}px`
-		this.style.borderRadius = `${size}px`
-		this.style.fontSize = `${size / 2}px`
+		const radius = Math.round(smooth_size(size))
+		this.style.width = `${radius}px`
+		this.style.height = `${radius}px`
+		this.style.borderRadius = `${radius}px`
+		this.style.fontSize = `${radius / 2}px`
+
 		this.style.left = `${x}px`
 		this.style.top = `${y}px`
 
