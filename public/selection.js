@@ -12,6 +12,15 @@ export default class RectangularSelection extends HTMLElement {
 		this.y2 = 0
 	}
 
+	/**
+	 * @param {MouseEvent} e
+	 */
+	me(e) {
+		if (e.target !== e.currentTarget)
+			return false
+		return true
+	}
+
 	update()
 	{
 		const x3 = Math.min(this.x1, this.x2)
@@ -29,6 +38,10 @@ export default class RectangularSelection extends HTMLElement {
 	 */
 	mousedown(e)
 	{
+		if (!this.me(e))
+			return;
+
+
 		this.hidden = false
 		this.x1 = e.clientX
 		this.y1 = e.clientY
@@ -40,6 +53,9 @@ export default class RectangularSelection extends HTMLElement {
 	 */
 	mousemove(e)
 	{
+		if (!this.me(e))
+			return;
+
 		this.x2 = e.clientX
 		this.y2 = e.clientY
 		this.update()
