@@ -11,6 +11,8 @@ globalThis.graph = {
 	 * @type {Map<Number, Node>}
 	 */
 	vertices: new Map(),
+
+	max_size: 0
 }
 
 /**
@@ -48,8 +50,14 @@ export class Edge extends HTMLElement {
 	 */
 	constructor(canvas, first, second) {
 		super()
-		this.first = first
-		this.second = second
+		if (first.size < second.size)
+		{
+			this.first = first
+			this.second = second
+		} else {
+			this.first = second
+			this.second = first
+		}
 		this.size = first.size + second.size
 		this.id = `edge-${Math.min(first.vertice, second.vertice)}-to-${Math.max(first.vertice, second.vertice)}`
 
@@ -68,6 +76,31 @@ export class Edge extends HTMLElement {
 		second.edges.set(first.vertice, this.size)
 
 		this.update()
+		this.update_colour()
+	}
+
+	async update_colour() {
+		const first = await this.first.update_colour()
+		const second = await this.second.update_colour()
+
+		const a = `rgb(${first.red}, ${first.green}, ${first.blue})`
+		const b = `rgb(${second.red}, ${second.green}, ${second.blue})`
+		console.log(`linear-gradient(${this.angle()}rad, ${a}, ${b})`)
+		this.style.background = `linear-gradient(${this.angle()}rad, ${a}, ${b})`
+
+	}
+
+	angle() {
+		const rect1 = this.first.getBoundingClientRect()
+		const rect2 = this.second.getBoundingClientRect()
+
+		const center_x1 = rect1.x + rect1.width / 2
+		const center_y1 = rect1.y + rect1.height / 2
+		const center_x2 = rect2.x + rect2.width / 2
+		const center_y2 = rect2.y + rect2.height / 2
+
+		const angle = Math.atan2(center_y2 - center_y1, center_x2 - center_x1);
+		return angle
 	}
 
 	/**
@@ -90,7 +123,7 @@ export class Edge extends HTMLElement {
 		 */
 		const angle = Math.atan2(center_y2 - center_y1, center_x2 - center_x1);
 		this.style.transform = `rotate(${angle}rad)`
-		this.label.style.transform = `rotate(${0}rad)`
+		// this.label.style.transform = `rotate(${0}rad)`
 
 		const radius1 = rect1.width / 2;
 		const radius2 = rect2.width / 2;
@@ -166,9 +199,9 @@ export async function move_node(node, e) {
 function node_smooth_size (x)
 {
 	const min = 25
-	const max = Math.max(0, x - 100)
-	const exp = Math.exp(-0.05 * (x - 70))
-	return min + 100 / (1 + exp) + 0.5 * Math.log(1 + max)
+	const max = Math.exp(x)
+	const exp = Math.exp(-0.05 * (x - 125))
+	return min + 100 / (1 + exp) + 0.3 * Math.log(1 + max)
 }
 
 export class Node extends HTMLElement {
@@ -197,7 +230,7 @@ export class Node extends HTMLElement {
 
 
 		// this.textContent = `${size}`
-		this.textContent = `${this.vertice}`
+		this.textContent = `${size}`
 
 		this.addEventListener('mousedown', this.mousedown)
 
@@ -218,11 +251,40 @@ export class Node extends HTMLElement {
 
 		})
 
+		if (graph.max_size < this.size)
+		{
+			graph.max_size = Math.max(this.size, graph.max_size)
+			for (const node of document.querySelectorAll('graph-node'))
+				if (node instanceof Node)
+					node.update_colour()
+			for (const edge of document.querySelectorAll('graph-edge'))
+				if (edge instanceof Edge)
+					edge.update_colour()
+		}
+
+		this.update_colour()
+
 		/**
 		 * Edge to ID with WEIGHT.
 		 * @type {Map<Number, Number>}
 		 */
 		this.edges = new Map()
+	}
+
+	async update_colour() {
+		const [a, b] = [
+			{red: 0, green: 0, blue: 255},
+			{red: 255, green: 0, blue: 0},
+		]
+
+		const percentage = this.size / graph.max_size
+
+		const red = a.red + percentage * (b.red - a.red)
+		const green = a.green + percentage * (b.green - a.green)
+		const blue = a.blue + percentage * (b.blue - a.blue)
+		this.style.background = `rgb(${red}, ${green}, ${blue}, 1)`
+
+		return {red, green, blue}
 	}
 
 	/**

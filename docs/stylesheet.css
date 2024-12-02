@@ -1,13 +1,12 @@
 body {
 	display: flex;
 	flex-direction: column;
-	background: red;
 	padding: 0;
 	margin: 0;
 	height: 100vh;
 
 	>.bar {
-		background: blue;
+		background: black;
 		flex: 0.08;
 		display: flex;
 		justify-content: center;
@@ -20,25 +19,29 @@ body {
 			font-size: 1.25rem;
 			padding: 0.25rem 0.5rem;
 			cursor: pointer;
-			background: red;
+			border: 1px dotted white;
+
+			&.chosen {
+				background: white;
+				color: black;
+			}
 		}
 	}
 
 	>.canvas {
 		position: relative;
-		background: green;
+		background: white;
 		flex: 1;
 		user-select: none;
 
 		rectangular-selection {
 			border: 1px dotted #000;
 			position: absolute;
-			background-color: yellow;
+			background-color: black;
 		}
 
 		>graph-node {
 			position: absolute;
-			background: rgb(0, 0, 255, 0.25);
 			font-weight: bold;
 			aspect-ratio: 1 1;
 			cursor: pointer;
@@ -59,8 +62,9 @@ body {
 		>span {
 			position: absolute;
 			transform-origin: 0 50%;
-			background-color: white;
+			font-weight: bold;
 			z-index: 2;
+			text-shadow: 0 0 0.5rem rgb(0, 0, 0, 1);
 		}
 	}
 }

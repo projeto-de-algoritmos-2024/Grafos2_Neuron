@@ -38,17 +38,29 @@ canvas.addEventListener('mousemove', async e => {
 	move_node(node, e)
 })
 
+/**
+ * @param {HTMLElement} chosen 
+ */
+function button_pick (chosen) {
+	for (const button of document.querySelectorAll('.button'))
+		button.classList.remove('chosen')
+	chosen.classList.add('chosen')
+}
+
 const eraser = /** @type {HTMLDivElement} */ (document.querySelector('.eraser'))
 eraser.addEventListener('click', () => {
 	window.mode = 'eraser'
+	button_pick(eraser)
 })
 
 const pencil = /** @type {HTMLDivElement} */ (document.querySelector('.pencil'))
 pencil.addEventListener('click', () => {
 	window.mode = 'pencil'
+	button_pick(pencil)
 })
 
 const prim = /** @type {HTMLDivElement} */ (document.querySelector('.prim'))
 prim.addEventListener('click', () => {
 	window.mode = 'prim'
+	button_pick(prim)
 })
