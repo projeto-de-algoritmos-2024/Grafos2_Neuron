@@ -20,10 +20,3 @@ canvas.addEventListener('mousemove', async e => {
 	const node = /** @type {Node} */ (graph.map.get(graph.pick))
 	move_node(node, e)
 })
-
-const a = new Node(canvas, 10, 400, 400)
-const b = new Node(canvas, 5, 500, 100)
-const c = new Node(canvas, 15, 250, 500)
-a.connect(b)
-b.connect(c)
-a.connect(c)
