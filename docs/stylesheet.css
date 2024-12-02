@@ -42,7 +42,7 @@ body {
 			font-weight: bold;
 			aspect-ratio: 1 1;
 			cursor: pointer;
-			z-index: 2;
+			z-index: 3;
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -61,6 +61,7 @@ body {
 			position: absolute;
 			transform-origin: 0 50%;
 			background-color: white;
+			z-index: 2;
 		}
 	}
 }

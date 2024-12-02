@@ -106,7 +106,7 @@ export async function find_node (id) {
 export async function stop_picking () {
 	const picken = await find_node(graph.pick)
 	if (picken)
-		picken.style.zIndex = '2'
+		picken.style.zIndex = '3'
 	graph.pick = 0
 }
 
@@ -167,7 +167,7 @@ export class Node extends HTMLElement {
 	async mousedown()
 	{
 		graph.pick = this.vertice
-		this.style.zIndex = '3'
+		this.style.zIndex = '4'
 	}
 }
 
