@@ -1,4 +1,4 @@
-import { Node } from './graph.js'
+import { Node, find_node } from './graph.js'
 
 export class RectangularSelection extends HTMLElement {
 	/**
@@ -59,14 +59,47 @@ export class RectangularSelection extends HTMLElement {
 		this.update()
 	}
 
-	mouseup()
+	/**
+	 * @param {MouseEvent} e
+	 */
+	mouseup(e)
 	{
+		if (e.target !== e.currentTarget)
+			return
+
 		const rect = this.getBoundingClientRect()
-		const radius = Math.min(rect.width, rect.height)
-		const [x, y] = [rect.x, rect.y]
-		this.canvas.appendChild(new Node(this.canvas, radius, x, y))
+		this.create_node(Math.min(rect.width, rect.height), rect.x, rect.y)
 
 		this.hidden = true
+	}
+
+	/**
+	 * @param {Number} radius
+	 * @param {Number} x
+	 * @param {Number} y
+	 */
+	async create_node(radius, x, y)
+	{
+		function random() {
+			return Math.floor(Math.random() * graph.ids) + 1
+		}
+
+		const node = new Node(this.canvas, radius, x, y)
+		this.canvas.appendChild(node)
+
+		/**
+		 * @type {Set<Number>}
+		 */
+		const set = new Set()
+		for (let i = 1; i <= 3; ++i)
+			set.add(random())
+
+		for (const id of set)
+		{
+			console.log(id)
+			const to = /** @type {Node} */ (await find_node(id))
+			node.connect(to)
+		}
 	}
 }
 

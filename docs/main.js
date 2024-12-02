@@ -6,7 +6,7 @@ const selection = new RectangularSelection(canvas)
 
 selection.hidden = true
 
-canvas.addEventListener('mouseup', async () => selection.mouseup())
+canvas.addEventListener('mouseup', async e => selection.mouseup(e))
 canvas.addEventListener('mousedown', async e => selection.mousedown(e))
 canvas.addEventListener('mousemove', async e => selection.mousemove(e))
 

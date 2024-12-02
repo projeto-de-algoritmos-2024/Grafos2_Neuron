@@ -65,18 +65,18 @@ export class Edge extends HTMLElement {
 
 		if (distance <= radius1 + radius2) {
 			this.style.display = 'none';
+			this.label.style.display = 'none';
 			return;
 		}
 
 		this.style.display = 'block';
-
+		this.label.style.display = 'block';
 
 		const x1 = center_x1 + radius1 * Math.cos(angle);
 		const y1 = center_y1 + radius1 * Math.sin(angle);
 		const x2 = center_x2 - radius2 * Math.cos(angle);
 		const y2 = center_y2 - radius2 * Math.sin(angle);
 
-		const rect = this.getBoundingClientRect()
 		this.style.left = `${x1}px`
 		this.style.top = `${y1}px`
 
