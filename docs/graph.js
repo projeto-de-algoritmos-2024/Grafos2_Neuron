@@ -39,6 +39,7 @@ export class Edge extends HTMLElement {
 		this.first = first
 		this.second = second
 		this.size = first.size + second.size
+		this.id = `edge-${Math.min(first.vertice, second.vertice)}-to-${Math.max(first.vertice, second.vertice)}`
 
 		const height = Math.round(edge_smooth_size(this.size))
 		this.style.height = `${height}px`
