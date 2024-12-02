@@ -34,6 +34,11 @@ export class RectangularSelection extends HTMLElement {
 		this.style.height = `${size}px`
 	}
 
+	click()
+	{
+		this.hidden = true
+	}
+
 	/**
 	 * @param {MouseEvent} e
 	 */
@@ -53,7 +58,6 @@ export class RectangularSelection extends HTMLElement {
 	 */
 	mousemove(e)
 	{
-
 		this.x2 = e.clientX
 		this.y2 = e.clientY
 		this.update()
@@ -69,7 +73,6 @@ export class RectangularSelection extends HTMLElement {
 
 		const rect = this.getBoundingClientRect()
 		this.create_node(Math.min(rect.width, rect.height), rect.x, rect.y)
-
 		this.hidden = true
 	}
 
@@ -84,15 +87,15 @@ export class RectangularSelection extends HTMLElement {
 			return Math.floor(Math.random() * graph.ids) + 1
 		}
 
-		const node = new Node(this.canvas, radius, x, y)
-		this.canvas.appendChild(node)
-
 		/**
 		 * @type {Set<Number>}
 		 */
 		const set = new Set()
-		for (let i = 1; i <= 3; ++i)
+		for (let i = 1; i <= 1; ++i)
 			set.add(random())
+
+		const node = new Node(this.canvas, radius, x, y)
+		this.canvas.appendChild(node)
 
 		for (const id of set)
 		{
