@@ -32,7 +32,7 @@ async function get_component (source)
 export async function process_edge (from, to)
 {
 	const edge = /** @type {Edge} */ (find_edge(from, to))
-	edge.style.background = 'pink'
+	edge.style.background = 'rgb(255, 255, 255, 0.8)'
 	console.log(from, to, edge)
 }
 
@@ -40,7 +40,7 @@ async function clean_edges() {
 	for (const edge of document.querySelectorAll('graph-edge'))
 		if (edge instanceof Edge)
 		{
-			edge.style.background = 'red'
+			edge.style.background = 'rgb(255, 255, 255, 0.05)'
 		}
 }
 

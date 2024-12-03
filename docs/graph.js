@@ -20,7 +20,7 @@ globalThis.graph = {
  */
 function edge_smooth_size (x)
 {
-	const min = 1
+	const min = 3
 	const max = Math.max(0, x - 55)
 	const exp = Math.exp(-0.1 * (x - 50))
 	return min + 5 / (1 + exp) + 0.5 * Math.log(1 + max)
