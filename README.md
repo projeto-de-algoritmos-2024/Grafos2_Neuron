@@ -20,10 +20,7 @@ Adicione 3 ou mais screenshots do projeto em funcionamento.
 ## Instalação
 **Linguagem**: Javascript, HTML, CSS<br>
 
-# Video de apresentação
-
-
-## Como rodar o projeto
+### Como rodar o projeto
 1. Clone o Repositório 
   ```
       https://github.com/projeto-de-algoritmos-2024/Grafos2_Neuron.git
@@ -42,4 +39,9 @@ Adicione 3 ou mais screenshots do projeto em funcionamento.
       http-server docs/
   ```
 6. Acesse o projeto em http://127.0.0.1:8080
+
+
+# Video de apresentação
+
+
 
