@@ -56,3 +56,15 @@ A aplicação oferece funcionalidades para deletar nós e suas arestas associada
 6. Acesse o projeto em http://127.0.0.1:8080
 
 # Video de apresentação
+
+[Video de apresentação em 02/12/2024 do projeto Neuron](https://youtu.be/D34y4ugFGVI)
+
+Renan V. Guedes
+- Introdução
+- Protótipo
+- Site
+
+João V. Farias
+- Implementação
+- Código
+- Estilização
