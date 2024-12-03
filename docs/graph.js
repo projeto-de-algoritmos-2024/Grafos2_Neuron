@@ -64,8 +64,18 @@ export class Edge extends HTMLElement {
 		const height = Math.round(edge_smooth_size(this.size))
 		this.style.height = `${height}px`
 
-		first.addEventListener('mousemove', () => this.update())
-		second.addEventListener('mousemove', () => this.update())
+		first.addEventListener('mousemove', () => {
+			if (!graph.pick)
+				return
+
+			this.update()
+		})
+		second.addEventListener('mousemove', () => {
+			if (!graph.pick)
+				return
+
+			this.update()
+		})
 
 		this.label = document.createElement('span')
 		this.label.textContent = `${this.size}`
@@ -113,10 +123,10 @@ export class Edge extends HTMLElement {
 		const rect1 = this.first.getBoundingClientRect()
 		const rect2 = this.second.getBoundingClientRect()
 
-		const center_x1 = rect1.x + rect1.width / 2
-		const center_y1 = rect1.y + rect1.height / 2
-		const center_x2 = rect2.x + rect2.width / 2
-		const center_y2 = rect2.y + rect2.height / 2
+		const center_x1 = rect1.x + this.first.radius / 2
+		const center_y1 = rect1.y + this.first.radius / 2
+		const center_x2 = rect2.x + this.second.radius  / 2
+		const center_y2 = rect2.y + this.second.radius / 2
 
 		/*
 		 * Calculate angle.
@@ -146,6 +156,11 @@ export class Edge extends HTMLElement {
 		const x2 = center_x2 - radius2 * Math.cos(angle);
 		const y2 = center_y2 - radius2 * Math.sin(angle);
 
+		const x1_u = center_x1;
+		const y1_u = center_y1;
+		const x2_u = center_x2;
+		const y2_u = center_y2;
+
 		this.style.left = `${x1}px`
 		this.style.top = `${y1}px`
 
@@ -156,7 +171,7 @@ export class Edge extends HTMLElement {
 		/*
 		 * Calculate width
 		 */
-		const width = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+		const width = Math.sqrt((x2_u - x1_u) ** 2 + (y2_u - y1_u) ** 2)
 		this.style.width = `${width}px`
 	}
 }
@@ -220,6 +235,7 @@ export class Node extends HTMLElement {
 		this.canvas = canvas
 
 		const radius = Math.round(node_smooth_size(size))
+		this.radius = radius
 		this.style.width = `${radius}px`
 		this.style.height = `${radius}px`
 		this.style.borderRadius = `${radius}px`

@@ -30,7 +30,7 @@ body {
 
 	>.canvas {
 		position: relative;
-		background: white;
+		background: #111111;
 		flex: 1;
 		user-select: none;
 
@@ -50,6 +50,12 @@ body {
 			justify-content: center;
 			align-items: center;
 			border-radius: 5rem;
+			box-shadow: 0 0 1rem black;
+			transition: transform ease-in-out 0.125s;
+
+			&:hover {
+				transform: scale(1.25, 1.25);
+			}
 		}
 
 		>graph-edge {
@@ -62,9 +68,9 @@ body {
 		>span {
 			position: absolute;
 			transform-origin: 0 50%;
-			font-weight: bold;
+			font-weight: bolder;
 			z-index: 2;
-			text-shadow: 0 0 0.5rem rgb(0, 0, 0, 1);
+			text-shadow: 0 0 0.5rem white;
 		}
 	}
 }
