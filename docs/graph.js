@@ -64,6 +64,11 @@ export class Edge extends HTMLElement {
 		const height = Math.round(edge_smooth_size(this.size))
 		this.style.height = `${height}px`
 
+		this.addEventListener('click', () => {
+			if (window.mode === 'eraser')
+				this.erase()
+		})
+
 		first.addEventListener('mousemove', () => {
 			if (!graph.pick)
 				return
@@ -87,6 +92,13 @@ export class Edge extends HTMLElement {
 
 		this.update()
 		this.update_colour()
+	}
+
+	async erase() {
+		this.first.edges.delete(this.second.vertice)
+		this.second.edges.delete(this.first.vertice)
+		this.label.remove()
+		this.remove()
 	}
 
 	async update_colour() {
@@ -256,14 +268,9 @@ export class Node extends HTMLElement {
 
 		this.addEventListener('click', () => {
 			if (window.mode === 'prim')
-			{
-				window.mode = 'pencil';
 				prim(this);
-			}
 			else if (mode === 'eraser')
-			{
-				this.erase()
-			}
+				this.erase();
 
 		})
 
