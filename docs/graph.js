@@ -183,7 +183,7 @@ export class Edge extends HTMLElement {
 		/*
 		 * Calculate width
 		 */
-		const width = Math.sqrt((x2_u - x1_u) ** 2 + (y2_u - y1_u) ** 2)
+		const width = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 		this.style.width = `${width}px`
 	}
 }

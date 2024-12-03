@@ -1,5 +1,5 @@
 /**
- * @type {'random' | 'pencil' | 'eraser' | 'prim'}
+ * @type { 'pencil' | 'eraser' | 'prim'}
  */
 globalThis.mode = 'pencil'
 
